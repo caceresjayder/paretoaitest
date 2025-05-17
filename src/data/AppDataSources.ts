@@ -11,5 +11,5 @@ export const AppDataSource = new DataSource({
     password: 'paretoai123@',
     database: 'paretoaitest',
     entities: [User, Chat, Message],
-    logging: true
+    // logging: true
 });
