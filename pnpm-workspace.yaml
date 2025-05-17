@@ -1,0 +1,6 @@
+ignoredBuiltDependencies:
+onlyBuiltDependencies:
+  - argon2
+  - '@tailwindcss/oxide'
+  - sharp
+  - unrs-resolver
