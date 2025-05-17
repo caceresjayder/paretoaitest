@@ -1,24 +1,18 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { Footer2 } from "@/components/public/footer";
+import { Navbar1 } from "@/components/public/header";
+import { Hero1 } from "@/components/public/hero";
+import { Stats8 } from "@/components/public/stats";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <nav className="flex items-center justify-between w-full">
-        <h1 className="text-2xl font-bold">Pareto AI Test</h1>
-        <div className="flex items-center gap-2">
-          <Button asChild>
-            <Link href={"/auth/login"}>
-            Login
-            </Link>
-          </Button>
-          <Button asChild>
-            <Link href={"/auth/register"}>
-            Register
-            </Link>
-            </Button>
-        </div>
-      </nav>
+    <div className="max-w-7xl mx-auto p-4">
+     <Navbar1 />
+      {/** jumbotron */}
+<Hero1 heading="Pareto AI Test" description="This is a test of the Pareto AI platform." />
+      {/** features */}
+      <Stats8 />
+      {/** footer */}
+      <Footer2 />
     </div>
   );
 }
