@@ -5,8 +5,8 @@ import { ApiResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/chats/:slug
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-    const { slug } = params;
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = await params;
     try {
         const chat = await chatRepository.findOneBy({ slug });
         if (!chat) {
@@ -18,9 +18,28 @@ export async function GET(request: NextRequest, { params }: { params: { slug: st
                 },
             }, { status: 404 });
         }
+
+        const messages = await messageRepository.find({
+            where: {
+                chatId: chat.id,
+            },
+            select: {
+                id: true,
+                createdAt: true,
+                updatedAt: true,
+                content: true,
+                isAssistant: true,
+                isUser: true
+            },
+            // order: {
+            //     id: "desc",
+            // },
+            take: 10,
+        });
+
         return NextResponse.json<ApiResponse>({
             success: true,
-            data: chat,
+            data: messages,
             error: null,
         }, { status: 200 });
     } catch (error) {
@@ -65,10 +84,13 @@ export async function POST(request: NextRequest, { params }: { params: { slug: s
             where: {
                 chatId: chat.id,
             },
-            order: {
-                id: "desc",
-            },
+            // order: {
+            //     id: "desc",
+            // },
             select: {
+                id: true,
+                createdAt: true,
+                updatedAt: true,
                 content: true,
                 isUser: true,
                 isAssistant: true,

@@ -5,13 +5,15 @@ export default {
         api: {
             register: `${API_URL}/auth/register`,
             login: `${API_URL}/auth/login`,
+            chats: `${API_URL}/chats`,
+            chat_messages: `${API_URL}/chats/:chatSlug`,
+            messages: `${API_URL}/chats/:chatSlug/messages`,
         }
     },
     server: {
     },
     openai: {
         apiKey: process.env.OPENAI_API_KEY,
-        baseUrl: process.env.OPENAI_BASE_URL,
         model: process.env.OPENAI_MODEL,
         temperature: process.env.OPENAI_TEMPERATURE,
         maxTokens: process.env.OPENAI_MAX_TOKENS,

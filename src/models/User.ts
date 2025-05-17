@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from "typeorm";
+import type { Relation } from "typeorm";
 import { Chat } from "./Chat";
 import { Message } from "./Message";
 
@@ -29,8 +30,8 @@ export class User {
     updatedAt!: Date;
     
     @OneToMany(() => Chat, (chat) => chat.user)
-    chats!: Chat[];
+    chats!: Relation<Chat>[];
 
     @OneToMany(() => Message, (message) => message.user)
-    messages!: Message[];
+    messages!: Relation<Message>[];
 }
