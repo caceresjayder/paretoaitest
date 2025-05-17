@@ -1,4 +1,4 @@
-import userRepository from "@/data/Repository/UserRepository";
+import { userRepository } from "@/data/Repository";
 import { verifyPassword } from "@/lib/passwords";
 import { createSession } from "@/lib/session";
 import { parseZodErrors } from "@/lib/utils";

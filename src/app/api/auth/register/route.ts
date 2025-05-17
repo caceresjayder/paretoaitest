@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
-import userRepository from "@/data/Repository/UserRepository";
 import { hashPassword } from "@/lib/passwords";
 import { registerSchema } from "@/lib/validation";
 import { ApiResponse } from "@/types";
 import { parseZodErrors } from "@/lib/utils";
+import { userRepository } from "@/data/Repository";
 
 export async function POST(request: Request) {
     

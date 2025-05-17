@@ -4,57 +4,6 @@ import { OpenAIResponse } from "@/lib/openai";
 import { ApiResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
-// GET /api/chats/:slug
-export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
-    const { slug } = await params;
-    try {
-        const chat = await chatRepository.findOneBy({ slug });
-        if (!chat) {
-            return NextResponse.json<ApiResponse>({
-                success: false,
-                data: null,
-                error: {
-                    root: "Chat not found",
-                },
-            }, { status: 404 });
-        }
-
-        const messages = await messageRepository.find({
-            where: {
-                chatId: chat.id,
-            },
-            select: {
-                id: true,
-                createdAt: true,
-                updatedAt: true,
-                content: true,
-                isAssistant: true,
-                isUser: true
-            },
-            // order: {
-            //     id: "desc",
-            // },
-            take: 10,
-        });
-
-        return NextResponse.json<ApiResponse>({
-            success: true,
-            data: messages,
-            error: null,
-        }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json<ApiResponse>({
-            success: false,
-            data: null,
-            error: {
-                root: "Failed to fetch chat",
-            },
-        }, { status: 500 });
-    }
-    
-}
-
-// POST /api/chats/:slug/
 export async function POST(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const { prompt } = await request.json();
@@ -121,11 +70,13 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
             isUser: false,
             isAssistant: true,
         });
+
         await messageRepository.save(assistantMessage);
+
 
         return NextResponse.json<ApiResponse>({
             success: true,
-            data: assistantMessage,
+            data: [message, assistantMessage],
             error: null,
         }, { status: 200 });
 
@@ -135,47 +86,6 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
             data: null,
             error: {
                 root: "Failed to fetch chat",
-            },
-        }, { status: 500 });
-    }
-}
-
-// DELETE /api/chats/:slug
-export async function DELETE(request: NextRequest, { params }: { params: { slug: string } }) {
-    const { slug } = params;
-    const user = await getUser();
-    if (!user) {
-        return NextResponse.json<ApiResponse>({
-            success: false,
-            data: null,
-            error: {
-                root: "User not found",
-            },
-        }, { status: 401 });
-    }
-    try {
-        const chat = await chatRepository.findOneBy({ slug, userId: user.id });
-        if (!chat) {
-            return NextResponse.json<ApiResponse>({
-                success: false,
-                data: null,
-                error: {
-                    root: "Chat not found",
-                },
-            }, { status: 404 });
-        }
-        await chatRepository.delete(chat.id);
-        return NextResponse.json<ApiResponse>({
-            success: true,
-            data: null,
-            error: null,
-        }, { status: 200 });
-    } catch (error) {
-        return NextResponse.json<ApiResponse>({
-            success: false,
-            data: null,
-            error: {
-                root: "Failed to delete chat",
             },
         }, { status: 500 });
     }

@@ -12,6 +12,7 @@ export default function ChatPage() {
     const params = useParams();
     const slug = params.slug as string;
     const [messages, setMessages] = useState<MessageItem[]>([]);
+    const [waitingForResponse, setWaitingForResponse] = useState(false);
 
     const getMessage = async() => {
         try {
@@ -28,28 +29,22 @@ export default function ChatPage() {
         }
     }
 
+    const insertMessages = (messages: MessageItem[], mock: boolean = false) => {
+        if (mock) {
+            setMessages(prev => [...prev, ...messages]);
+        } else {
+            setMessages(prev => [...prev.slice(0,-1), ...messages]);
+        }
+    }
+
     useEffect(() => {
         getMessage();
     }, [slug]);
 
-    // const messages: MessageItem[] = Array.from({ length: 50 }, (_, index) => ({
-    //     id: index,
-    //     content: `Message ${index + 1}`,
-    //     createdAt: new Date().toISOString(),
-    //     isUser: index % 2 === 0,
-    //     isAssistant: index % 2 !== 0,
-    //     chatId: 1,
-    //     updatedAt: new Date().toISOString(),
-    //   })).toReversed();
-
-    const reloadMessages = () => {
-        console.log("reloadMessages");
-    }
-
   return (
     <div className=" w-full overflow-hidden p-4">
-      <MessagesContainer chatSlug={slug} messages={messages} />
-      <ChatInput chatSlug={slug} />
+      <MessagesContainer chatSlug={slug} messages={messages} waitingForResponse={waitingForResponse}/>
+      <ChatInput chatSlug={slug} insertMessages={insertMessages} setWaitingForResponse={setWaitingForResponse} waitingForResponse={waitingForResponse}/>
     </div>
   );
 }

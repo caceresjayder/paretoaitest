@@ -7,10 +7,12 @@ import { Chat } from "@/models/Chat";
 import { Loader2 } from "lucide-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useParams } from "next/navigation";
 
 dayjs.extend(relativeTime);
 
 export default function ChatsContainer() {
+    const {slug} = useParams();
     const [chats, setChats] = useState<Chat[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     
@@ -34,7 +36,7 @@ export default function ChatsContainer() {
 
     useEffect(() => {
         getChats();
-    }, []);
+    }, [slug]);
 
     return (
         <div className="pl-2">
