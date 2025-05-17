@@ -45,7 +45,6 @@ export function ChatInput({ chatSlug, insertMessages, setWaitingForResponse, wai
         } finally {
             setWaitingForResponse(false);
         }
-        console.log(prompt);
     }
     return (
         <Card className="p-4 my-4">

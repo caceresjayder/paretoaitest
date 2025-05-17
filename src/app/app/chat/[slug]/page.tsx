@@ -17,7 +17,6 @@ export default function ChatPage() {
     const getMessage = async() => {
         try {
             const {data} = await axios.get<ApiResponse>(config.public.api.chat_messages.replace(':chatSlug', slug as string));
-            console.log(data)
             if (data.success && data.data && Array.isArray(data.data)) {
                 setMessages(data.data);
             } else {

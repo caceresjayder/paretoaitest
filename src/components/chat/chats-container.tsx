@@ -21,7 +21,6 @@ export default function ChatsContainer() {
             setIsLoading(true);
             const response = await axios.get('/api/chats');
             if(Array.isArray(response?.data?.data)) {
-                console.log(response.data.data);
                 setChats(response.data.data);
             } else {
                 toast.error('Error fetching chats');
