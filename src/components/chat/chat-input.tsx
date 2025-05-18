@@ -6,11 +6,11 @@ import { Input } from "../ui/input";
 import config from "@/config/config";
 import { toast } from "sonner";
 import { MessageItem } from "@/types";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function ChatInput({ chatSlug, insertMessages, setWaitingForResponse, waitingForResponse }: { chatSlug: string, insertMessages: (messages: MessageItem[], mock: boolean) => void, setWaitingForResponse: (waiting: boolean) => void, waitingForResponse: boolean }) {
     const [prompt, setPrompt] = useState('');
-
+    const inputRef = useRef<HTMLInputElement|null>(null)
     const setLastMessage = (message: string) => {
         const lastMessage: MessageItem = {
             id: Number.MAX_SAFE_INTEGER,
@@ -44,8 +44,16 @@ export function ChatInput({ chatSlug, insertMessages, setWaitingForResponse, wai
             console.error(error);
         } finally {
             setWaitingForResponse(false);
+            inputRef.current?.focus();
         }
     }
+
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
+
     return (
         <Card className="p-4 my-4">
             <form onSubmit={onSubmit}>
@@ -58,6 +66,7 @@ export function ChatInput({ chatSlug, insertMessages, setWaitingForResponse, wai
                     onChange={(e) => setPrompt(e.target.value)}
                     value={prompt}
                     disabled={waitingForResponse}
+                    ref={inputRef}
                 />
                 <Button type="submit" disabled={waitingForResponse}>
                     Send
