@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       );
     }
     // get all chats for the user and the last message timestamp of each chat
-    const chats = await chatRepository.findBy({ userId: user.id });
+    const chats = await chatRepository.find({ where: {userId: user.id}, order: { updatedAt: 'desc' } });
 
     return NextResponse.json<ApiResponse>(
       {

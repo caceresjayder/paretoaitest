@@ -9,7 +9,6 @@ import { NextRequest } from 'next/server';
 import { getUser } from '@/lib/dal';
 import config from '@/config/config';
 import { OpenAIResponse } from '@/lib/openai';
-import { generateUniqueUUID } from '@/lib/utils';
 
 const mockChats = [
     {
@@ -44,6 +43,7 @@ jest.mock('@/data/Repository', () => ({
         findOneBy: jest.fn(),
     },
     chatRepository: {
+        find: jest.fn(),
         findBy: jest.fn(),
         create: jest.fn(),
         save: jest.fn(),
@@ -60,13 +60,6 @@ const mockUser = {
     name: 'test',
 }
 
-
-
-const mockSession = {
-    userId: '1',
-}
-
-
 describe('Chats Endpoints test', () => {
     let req: NextRequest;
     let res: NextResponse;
@@ -77,7 +70,7 @@ describe('Chats Endpoints test', () => {
 
     it('user can get chats', async () => {
         (userRepository.findOneBy as jest.Mock).mockResolvedValueOnce(mockUser);
-        (chatRepository.findBy as jest.Mock).mockResolvedValueOnce(mockChats);
+        (chatRepository.find as jest.Mock).mockResolvedValueOnce(mockChats);
         (getUser as jest.Mock).mockResolvedValueOnce(mockUser);
 
         req = new NextRequest('http://localhost:3000/api/chats', {
@@ -92,9 +85,10 @@ describe('Chats Endpoints test', () => {
             success: true,
         });
         expect(getUser).toHaveBeenCalledTimes(1);
-        expect(chatRepository.findBy).toHaveBeenCalledTimes(1);
-        expect(chatRepository.findBy).toHaveBeenCalledWith({
-            userId: mockUser.id,
+        expect(chatRepository.find).toHaveBeenCalledTimes(1);
+        expect(chatRepository.find).toHaveBeenCalledWith({
+            order: { updatedAt: 'desc' },
+            where: { userId: mockUser.id },
         });
         
     });
@@ -119,7 +113,7 @@ describe('Chats Endpoints test', () => {
 
     it("generic error reporting", async () => {
         (getUser as jest.Mock).mockResolvedValue(mockUser);
-        (chatRepository.findBy as jest.Mock).mockRejectedValue(new Error('Database error'));
+        (chatRepository.find as jest.Mock).mockRejectedValue(new Error('Database error'));
 
         req = new NextRequest('http://localhost:3000/api/chats', {
             method: 'GET',
