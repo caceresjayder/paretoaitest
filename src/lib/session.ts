@@ -2,10 +2,6 @@ import "server-only";
 import { SignJWT, jwtVerify } from "jose";
 import { SessionPayload } from "./definitions";
 import { cookies } from "next/headers";
-import { cache } from "react";
-import { redirect } from "next/navigation";
-
-// import { SessionPayload } from '@/app/lib/definitions'
 
 const secretKey = process.env.SESSION_SECRET;
 const encodedKey = new TextEncoder().encode(secretKey);
@@ -25,6 +21,8 @@ export async function decrypt(session: string | undefined = "") {
     });
     return payload;
   } catch (error) {
+    console.error(error)
+    return null;
   }
 }
 

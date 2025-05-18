@@ -3,14 +3,12 @@ import { chatRepository, messageRepository } from "@/data/Repository";
 import { getUser } from "@/lib/dal";
 import { OpenAIResponse } from "@/lib/openai";
 import { generateUniqueUUID } from "@/lib/utils";
-import { Message } from "@/models/Message";
 import { ApiResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const q = searchParams.get("q");
     const user = await getUser();
     if (!user) {
       return NextResponse.json<ApiResponse>(
@@ -35,6 +33,7 @@ export async function GET(request: NextRequest) {
       },
       { status: 200 }
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json<ApiResponse>(
       {
@@ -113,6 +112,7 @@ export async function POST(request: Request) {
       },
       { status: 201 }
     );
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json<ApiResponse>(
       {

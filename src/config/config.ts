@@ -1,6 +1,5 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const FRONTEND_URL = process.env.FRONTEND_URL;
-export default {
+const config = {
     public: {
         api: {
             register: `${API_URL}/auth/register`,
@@ -24,8 +23,10 @@ export default {
         You should use no more than 100 max tokens for the answer.
         All responses should be in markdown format.
         No images or other media should be included in the response.
-        No code should be included in the response.
+        If the user asks for a code, you should generate a code block with the code.
         If you are asked to generate a non supported type of content, you should say that you are not able to do that.
         `
     }
 }
+
+export default config;

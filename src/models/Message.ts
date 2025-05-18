@@ -1,7 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from "typeorm";
-import type { Relation } from "typeorm";
-import { User } from "./User";
-import { Chat } from "./Chat";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({name: 'messages'})
 export class Message {
@@ -29,9 +26,4 @@ export class Message {
     @UpdateDateColumn({type: 'timestamp'})
     updatedAt!: Date;
 
-    @ManyToOne(() => Chat, (chat) => chat.messages)
-    chat!: Relation<Chat>;
-
-    @ManyToOne(() => User, (user) => user.messages)
-    user!: Relation<User>;
 }

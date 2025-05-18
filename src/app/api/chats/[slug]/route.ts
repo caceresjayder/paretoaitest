@@ -2,7 +2,6 @@ import { chatRepository, messageRepository } from "@/data/Repository";
 import { getUser } from "@/lib/dal";
 import { OpenAIResponse } from "@/lib/openai";
 import { ApiResponse } from "@/types";
-import { NextApiRequest } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 // GET /api/chats/:slug
@@ -64,6 +63,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
             data: messages,
             error: null,
         }, { status: 200 });
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
         return NextResponse.json<ApiResponse>({
             success: false,
@@ -179,6 +179,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
             error: null,
         }, { status: 200 });
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
         return NextResponse.json<ApiResponse>({
             success: false,
@@ -234,6 +235,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
             data: null,
             error: null,
         }, { status: 200 });
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
         return NextResponse.json<ApiResponse>({
             success: false,

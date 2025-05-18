@@ -17,6 +17,7 @@ export interface LoginError extends GenericError {
 
 export interface ApiResponse {
     success: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     data: Record<string, any>|null;
     error: GenericError|null;
 }

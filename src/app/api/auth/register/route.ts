@@ -5,6 +5,7 @@ import { ApiResponse } from "@/types";
 import { parseZodErrors } from "@/lib/utils";
 import { userRepository } from "@/data/Repository";
 
+
 export async function POST(request: Request) {
     
     try {
@@ -48,6 +49,7 @@ export async function POST(request: Request) {
             error: null
         }, { status: 201 });
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
         return NextResponse.json<ApiResponse>({
             success: false,

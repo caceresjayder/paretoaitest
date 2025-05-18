@@ -13,6 +13,7 @@ import {
 import { NavUser } from "./nav-user"
 import { AuthUser } from "@/types"
 import ChatsContainer from "../chat/chats-container"
+import OpenNewChatButton from "./open-new-chat-button"
 import { Command } from "lucide-react"
   
   export function AppSidebar({ user }: { user: AuthUser }) {
@@ -20,7 +21,7 @@ import { Command } from "lucide-react"
       <Sidebar>
         <SidebarHeader>
         <SidebarMenu>
-          <SidebarMenuItem>
+          <SidebarMenuItem className="flex justify-between">
             <SidebarMenuButton size="lg" asChild>
               <a href="/app">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
@@ -31,6 +32,10 @@ import { Command } from "lucide-react"
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
               </a>
+              
+            </SidebarMenuButton>
+            <SidebarMenuButton size="lg" asChild>
+              <OpenNewChatButton />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

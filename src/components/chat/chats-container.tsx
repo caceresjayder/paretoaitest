@@ -33,6 +33,10 @@ export default function ChatsContainer() {
         }
     }
 
+    const handleDelete = () => {
+        getChats();
+    }
+
     useEffect(() => {
         getChats();
     }, [slug]);
@@ -52,7 +56,7 @@ export default function ChatsContainer() {
                     description: item.description,
                     lastMessageDate: dayjs(item.updatedAt).fromNow(),
                     name: item.name
-                }}/>
+                }} onDelete={handleDelete}/>
             })}
         </div>
     )

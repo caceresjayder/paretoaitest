@@ -24,6 +24,7 @@ export const verifySession = cache(async () => {
       const user = await userRepository.findOneBy({ id: parseInt(session.userId) })
       return user
     } catch (error) {
+      console.error(error)
       return null
     }
   })
