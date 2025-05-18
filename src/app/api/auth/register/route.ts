@@ -49,7 +49,6 @@ export async function POST(request: Request) {
         }, { status: 201 });
 
     } catch (err) {
-        console.error(err)
         return NextResponse.json<ApiResponse>({
             success: false,
             data: null,

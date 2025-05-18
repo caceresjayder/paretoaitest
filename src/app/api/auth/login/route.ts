@@ -42,16 +42,17 @@ export async function POST(request: Request) {
 
         await createSession(user.id.toString());
 
+        const {password: _, ...userWithoutPassword} = user;
+
         return NextResponse.json<ApiResponse>({ 
             success: true,
             error: null,
             data: {
-                user: user
+                user: userWithoutPassword
             }
         }, { status: 200 });
 
     } catch (error) {
-        console.error(error)
         return NextResponse.json<ApiResponse>({ 
             success: false,
             error: { root: "Server error, please try again later" },
