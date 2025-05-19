@@ -26,6 +26,13 @@ const config = {
         If the user asks for a code, you should generate a code block with the code.
         If you are asked to generate a non supported type of content, you should say that you are not able to do that.
         `
+    },
+    database: {
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
     }
 }
 
