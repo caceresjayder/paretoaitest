@@ -12,5 +12,18 @@ export const AppDataSource = new DataSource({
     password: config.database.password,
     database: config.database.database,
     entities: [User, Chat, Message],
-    // logging: true
+    synchronize: config.server.isDevelopment,
+    dropSchema: config.server.isTest,
+    // logging: config.server.isDevelopment,
 });
+
+if(!AppDataSource.isInitialized) {
+    AppDataSource.initialize()
+        .then(() => {
+            console.log("Data Source has been initialized!");
+        })
+        .catch((err) => {
+            console.error("Error during Data Source initialization", err);
+        });
+}
+export default AppDataSource;
